@@ -1,0 +1,14 @@
+{
+  "name": "elite-networks-site",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "dependencies": {"astro": "^5.0.0"},
+  "devDependencies": {"wrangler": "^4.0.0"}
+}

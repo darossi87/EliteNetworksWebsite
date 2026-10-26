@@ -1,0 +1,15 @@
+{
+  "name": "elite-networks",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "vars": {
+    "CONTACT_TO_EMAIL": "sales@elitenetworks.net",
+    "CONTACT_FROM_EMAIL": "Website <website@elitenetworks.net>"
+  },
+  "limits": {"cpu_ms": 30000}
+}
