@@ -1,2 +1,8 @@
 import { defineConfig } from 'astro/config';
-export default defineConfig({ site: 'https://elitenetworks.net', output: 'static' });
+import vercel from '@astrojs/vercel';
+
+export default defineConfig({
+  site: 'https://elitenetworks.net',
+  output: 'static',
+  adapter: vercel(),
+});
