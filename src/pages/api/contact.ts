@@ -58,9 +58,16 @@ export const POST: APIRoute = async ({ request }) => {
       method: 'POST', body: verifyBody
     });
     if (!result.ok) return json({ error: 'Spam verification service unavailable. Please retry.' }, 503);
-    const verified = await result.json() as { success?: boolean; hostname?: string };
-    if (!verified.success || (verified.hostname && verified.hostname !== new URL(request.url).hostname))
+    const verified = await result.json() as { success?: boolean; hostname?: string; 'error-codes'?: string[] };
+    if (!verified.success) {
+      console.error('Turnstile Siteverify rejected token', { codes: verified['error-codes'] || [], verifiedHostname: verified.hostname || null });
       return json({ error: 'Spam verification failed. Please retry the check.' }, 400);
+    }
+    // Cloudflare Turnstile already enforces the hostnames configured on the widget.
+    // Do not compare Siteverify hostname to request.url: behind Vercel's proxy
+    // those can legitimately differ (custom domains and preview deployments).
+    // If your security policy requires a separate allowlist, compare against
+    // explicit trusted hostnames instead of the incoming request URL.
   } catch (err) {
     console.error('Turnstile verification request failed', err);
     return json({ error: 'Spam verification temporarily unavailable.' }, 503);
